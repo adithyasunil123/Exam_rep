@@ -9,50 +9,42 @@ from conftest import *
  
 @pytest.mark.usefixtures("launch_app")
 class Test_Saucelab:
-    
-    def test_login(self,read_json):
+#function to login
+    def test_sauce_page_login(self,read_json):
         self.driver.find_element(AppiumBy.XPATH,username()).send_keys(read_json["username"])
         self.driver.find_element(AppiumBy.XPATH,password()).send_keys(read_json["password"])
         self.driver.find_element(AppiumBy.XPATH,login_btn()).click()
         time.sleep(5)
 
-    def test_grip_select(self):
+#function to click on grid option
+    def test_option_grid(self):
         self.driver.find_element(AppiumBy.XPATH,"//android.view.ViewGroup[@content-desc='test-Toggle']/android.widget.ImageView").click()
-        time.sleep(4)  
+        time.sleep(3)  
         self.driver.find_element(AppiumBy.XPATH,"//android.view.ViewGroup[@content-desc='test-Toggle']/android.widget.ImageView").click()
-        time.sleep(4)  
-        
-    def test_filter_low_to_high(self):
-           try:
+        time.sleep(3)  
+
+       #function to click on filter and set as low to high 
+    def test_filter_option(self):
             self.driver.find_element(AppiumBy.XPATH,click_filter()).click()
-            time.sleep(4)
+            time.sleep(3)
             self.driver.find_element(AppiumBy.XPATH,low_to_high()).click()
             time.sleep(3)
-            first_element__price = self.driver.find_element(AppiumBy.XPATH,first_element()).text
-            second_element__price = self.driver.find_element(AppiumBy.XPATH,second_element()).text
-            if first_element__price < second_element__price:
-                    print("First Element price is lower than second element price")
-            else:
-                    print("Not in increasing order.")
-           except:
-                print("failed to run second test")
-
-    def test_filter_high_to_low(self):
-           try:
+            first = self.driver.find_element(AppiumBy.XPATH,firstelement()).text
+            second = self.driver.find_element(AppiumBy.XPATH,secondelement()).text
+            assert first < second
+             
+         #function to click on filter and set as high to low  
+    def test_filter_option2(self):
             self.driver.find_element(AppiumBy.XPATH,"//android.view.ViewGroup[@content-desc='test-Modal Selector Button']/android.view.ViewGroup/android.view.ViewGroup/android.widget.ImageView").click()
-            time.sleep(4)
+            time.sleep(3)
             self.driver.find_element(AppiumBy.XPATH,"//android.widget.TextView[@text='Price (high to low)']").click()
             time.sleep(3)
-            first_element___price = self.driver.find_element(AppiumBy.XPATH,"//android.widget.TextView[@content-desc='test-Price' and @text='$49.99']").text
-            second_element___price = self.driver.find_element(AppiumBy.XPATH,"//android.widget.TextView[@content-desc='test-Price' and @text='$29.99']").text
-            if first_element___price > second_element___price:
-                    print("First Element price is greater than second element price")
-            else:
-                    print("Not in decreasing order.")
-           except:
-                print("failed to run second test")            
+            first1 = self.driver.find_element(AppiumBy.XPATH,"//android.widget.TextView[@content-desc='test-Price' and @text='$49.99']").text
+            second2 = self.driver.find_element(AppiumBy.XPATH,"//android.widget.TextView[@content-desc='test-Price' and @text='$29.99']").text
+            assert first1 > second2
+                    
 
-   
+   #function to add items to cart
     def test_add_to_cart(self,read_json):
  
         count = len(self.driver.find_elements(AppiumBy.XPATH, item_count()))
@@ -64,6 +56,7 @@ class Test_Saucelab:
         time.sleep(3)
         self.driver.find_element(AppiumBy.XPATH, "//android.view.ViewGroup[@content-desc='test-ADD TO CART']").click()
         time.sleep(3)
+    
  
         #Navigate to cart page
         self.driver.find_element(AppiumBy.XPATH, nav_to_cart()).click()

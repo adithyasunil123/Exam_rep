@@ -59,7 +59,7 @@ def click_filter():
 
 def low_to_high():
         return "//android.widget.TextView[@text='Price (low to high)']"
-def first_element():
+def firstelement():
         return "//android.widget.TextView[@content-desc='test-Price' and @text='$7.99']"
-def second_element():
+def secondelement():
         return "//android.widget.TextView[@content-desc='test-Price' and @text='$9.99']"
